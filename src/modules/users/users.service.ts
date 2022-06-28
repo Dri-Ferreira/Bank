@@ -1,13 +1,19 @@
 import { UsersRepository } from './users.repository';
 import { IUser, IUserService } from './users.structure';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
-export class UsersService implements IUserService {
+export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
+
   async register(data: IUser): Promise<IUser> {
+    const verifiedUser = await this.userRepository.findByCpf(data.cpf);
+
+    if (verifiedUser) {
+      throw new ForbiddenException('User already exists');
+    }
     const newUser = await this.userRepository.register(data);
     return newUser;
   }

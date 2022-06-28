@@ -19,4 +19,8 @@ export class UsersRepository {
       },
     });
   }
+
+  findByCpf(cpf: string): Promise<IUser | null> {
+    return this.prisma.user.findFirst({ where: { cpf } });
+  }
 }

@@ -14,5 +14,6 @@ export interface IUserRepository {
 }
 
 export interface IUserService {
+  findByCpf(cpf: string): Promise<IUser | null>;
   register(data: IUser): Promise<IUser>;
 }

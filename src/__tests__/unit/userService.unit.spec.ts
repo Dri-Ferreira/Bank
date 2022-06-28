@@ -26,16 +26,30 @@ describe('UsersService', () => {
 
   describe('register', () => {
     it('should return a user', async () => {
+      const mockUser = jest.spyOn(usersRepository, 'findByCpf');
+
       const user = await createUser();
+
+      mockUser.mockResolvedValue(null);
       const mockRepository = jest
         .spyOn(usersRepository, 'register')
         .mockResolvedValue(user);
 
-      console.log(user);
       const result = await usersService.register(user);
       expect(result).toEqual(user);
-      console.log(result);
+
       expect(mockRepository).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return error if user already exists', async () => {
+      const user = await createUser();
+      jest.spyOn(usersRepository, 'findByCpf').mockResolvedValue(user);
+
+      try {
+        await usersService.register(user);
+      } catch (error) {
+        expect(error.message).toEqual('User already exists');
+      }
     });
   });
 });

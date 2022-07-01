@@ -52,4 +52,18 @@ describe('UsersService', () => {
       }
     });
   });
+
+  describe('findAll', () => {
+    it('should return all users', async () => {
+      const mockUsers = jest.spyOn(usersRepository, 'findAll');
+      const users = [
+        await createUser(),
+        await createUser(),
+        await createUser(),
+      ];
+      console.log(users);
+      mockUsers.mockResolvedValue(users);
+      expect(await usersService.findAll()).toEqual(users);
+    });
+  });
 });

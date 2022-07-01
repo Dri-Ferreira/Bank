@@ -23,4 +23,8 @@ export class UsersRepository {
   findByCpf(cpf: string): Promise<IUser | null> {
     return this.prisma.user.findFirst({ where: { cpf } });
   }
+
+  findAll(): Promise<IUser[]> {
+    return this.prisma.user.findMany();
+  }
 }

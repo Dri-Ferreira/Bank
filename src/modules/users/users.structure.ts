@@ -11,9 +11,11 @@ export interface IUser {
 
 export interface IUserRepository {
   register(data: IUser): Promise<IUser>;
+  findAll(): Promise<IUser[]>;
 }
 
 export interface IUserService {
-  findByCpf(cpf: string): Promise<IUser | null>;
   register(data: IUser): Promise<IUser>;
+  findAll(): Promise<IUser[]>;
+  findByCpf(cpf: string): Promise<IUser | null>;
 }

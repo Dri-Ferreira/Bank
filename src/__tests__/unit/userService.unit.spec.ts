@@ -61,7 +61,6 @@ describe('UsersService', () => {
         await createUser(),
         await createUser(),
       ];
-      console.log(users);
       mockUsers.mockResolvedValue(users);
       expect(await usersService.findAll()).toEqual(users);
     });

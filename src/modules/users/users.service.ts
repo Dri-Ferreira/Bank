@@ -1,15 +1,17 @@
 import { UsersRepository } from './users.repository';
 import { IUser } from './users.structure';
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+import { MailerService } from '@nestjs-modules/mailer';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UsersRepository) {}
+  constructor(
+    private readonly userRepository: UsersRepository,
+    private readonly mailService: MailerService,
+  ) {}
 
   async register(data: IUser): Promise<IUser> {
-    data.password = await bcrypt.hash(data.password, 10);
     const verifiedUser = await this.userRepository.findByCpf(data.cpf);
 
     if (verifiedUser) {
@@ -17,6 +19,14 @@ export class UsersService {
     }
 
     const newUser = await this.userRepository.register(data);
+
+    this.mailService.sendMail({
+      to: data.email,
+      from: 'Hilário tech <hilariotech@gmail.com>',
+      subject: 'User successfully registered ✔',
+      text: `Hi ${data.name}, you are receiving your access to the hilariotech system!
+      to access the system use your registered email and password.`,
+    });
 
     delete newUser.password;
     return newUser;

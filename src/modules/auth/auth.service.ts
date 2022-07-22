@@ -18,6 +18,6 @@ export class AuthService {
       throw new ForbiddenException('Invalid password or email');
     }
 
-    return 'Logged in successfully';
+    return ' User Logged in successfully';
   }
 }

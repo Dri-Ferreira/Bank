@@ -32,8 +32,12 @@ export class UsersService {
     return newUser;
   }
 
-  findAll() {
-    return this.userRepository.findAll();
+  async findAll(): Promise<IUser[]> {
+    const searchAll = await this.userRepository.findAll();
+    searchAll.map((user) => {
+      delete user.password;
+    });
+    return searchAll;
   }
 
   findOne(id: number) {

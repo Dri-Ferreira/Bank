@@ -11,13 +11,7 @@ export class UsersRepository {
     data.password = await bcrypt.hash(data.password, 10);
     return this.prisma.user.create({
       data: {
-        name: data.name,
-        email: data.email,
-        cpf: data.cpf,
-        address: data.address,
-        cep: data.cep,
-        doc_identity: data.doc_identity,
-        password: data.password,
+        ...data,
       },
     });
   }

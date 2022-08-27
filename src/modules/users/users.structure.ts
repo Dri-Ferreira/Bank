@@ -12,10 +12,12 @@ export interface IUser {
 export interface IUserRepository {
   register(data: IUser): Promise<IUser>;
   findAll(): Promise<IUser[]>;
+  findById(id: string): Promise<IUser | null>;
 }
 
 export interface IUserService {
   register(data: IUser): Promise<IUser>;
   findAll(): Promise<IUser[]>;
   findByCpf(cpf: string): Promise<IUser | null>;
+  findById(id: string): Promise<IUser | null>;
 }

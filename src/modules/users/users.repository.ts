@@ -23,4 +23,8 @@ export class UsersRepository {
   findAll(): Promise<IUser[]> {
     return this.prisma.user.findMany();
   }
+
+  findById(id: string): Promise<IUser | null> {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
 }

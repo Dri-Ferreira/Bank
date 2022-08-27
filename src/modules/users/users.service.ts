@@ -40,8 +40,13 @@ export class UsersService {
     return searchAll;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findById(id: string): Promise<IUser | null> {
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw new ForbiddenException(' Usuário não encontrado id Inválido!');
+    }
+    delete user.password;
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

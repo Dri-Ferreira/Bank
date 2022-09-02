@@ -13,13 +13,13 @@ export interface IUser {
 
 export interface IUserRepository {
   register(params: registerUser): Promise<responseUser>;
-  findAll(): Promise<IUser[]>;
-  findById(id: string): Promise<IUser | null>;
+  findAll(): Promise<responseUser[]>;
+  findById(id: string): Promise<responseUser | null>;
 }
 
 export interface IUserService {
   register(data: IUser): Promise<IUser>;
-  findAll(): Promise<IUser[]>;
-  findByCpf(cpf: string): Promise<IUser | null>;
-  findById(id: string): Promise<IUser | null>;
+  findAll(): Promise<responseUser[]>;
+  findByCpf(cpf: string): Promise<responseUser | null>;
+  findById(id: string): Promise<responseUser | null>;
 }

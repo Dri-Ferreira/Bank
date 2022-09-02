@@ -18,15 +18,15 @@ export class UsersRepository {
     });
   }
 
-  findByCpf(cpf: string): Promise<IUser | null> {
+  findByCpf(cpf: string): Promise<responseUser | null> {
     return this.prisma.user.findFirst({ where: { cpf } });
   }
 
-  findAll(): Promise<IUser[]> {
+  findAll(): Promise<responseUser[]> {
     return this.prisma.user.findMany();
   }
 
-  findById(id: string): Promise<IUser | null> {
+  findById(id: string): Promise<responseUser | null> {
     return this.prisma.user.findUnique({ where: { id } });
   }
 }

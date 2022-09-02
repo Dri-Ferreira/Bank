@@ -1,6 +1,5 @@
 import { registerUser } from './models/params/params';
 import { UsersRepository } from './users.repository';
-import { IUser } from './users.structure';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -34,7 +33,7 @@ export class UsersService {
     return newUser;
   }
 
-  async findAll(): Promise<IUser[]> {
+  async findAll(): Promise<responseUser[]> {
     const searchAll = await this.userRepository.findAll();
     searchAll.map((user) => {
       delete user.password;
@@ -42,7 +41,7 @@ export class UsersService {
     return searchAll;
   }
 
-  async findById(id: string): Promise<IUser | null> {
+  async findById(id: string): Promise<responseUser | null> {
     const user = await this.userRepository.findById(id);
     if (!user) {
       throw new ForbiddenException(' Usuário não encontrado id Inválido!');

@@ -1,8 +1,10 @@
+import { registerUser } from './models/params/params';
 import { UsersRepository } from './users.repository';
 import { IUser } from './users.structure';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { responseUser } from './models/response/response-user-repository';
 
 @Injectable()
 export class UsersService {
@@ -11,20 +13,20 @@ export class UsersService {
     private readonly mailService: MailerService,
   ) {}
 
-  async register(data: IUser): Promise<IUser> {
-    const verifiedUser = await this.userRepository.findByCpf(data.cpf);
+  async register(params: registerUser): Promise<responseUser> {
+    const verifiedUser = await this.userRepository.findByCpf(params.cpf);
 
     if (verifiedUser) {
       throw new ForbiddenException('User already exists');
     }
 
-    const newUser = await this.userRepository.register(data);
+    const newUser = await this.userRepository.register(params);
 
     this.mailService.sendMail({
-      to: data.email,
+      to: params.email,
       from: 'Hilário tech <hilariotech@gmail.com>',
       subject: 'User successfully registered ✔',
-      text: `Hi ${data.name}, you are receiving your access to the hilariotech system!
+      text: `Hi ${params.name}, you are receiving your access to the hilariotech system!
       to access the system use your registered email and password.`,
     });
 

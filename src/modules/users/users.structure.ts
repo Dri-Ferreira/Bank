@@ -1,3 +1,5 @@
+import { responseUser } from './models/response/response-user-repository';
+import { registerUser } from './models/params/params';
 export interface IUser {
   id?: string;
   name: string;
@@ -10,7 +12,7 @@ export interface IUser {
 }
 
 export interface IUserRepository {
-  register(data: IUser): Promise<IUser>;
+  register(params: registerUser): Promise<responseUser>;
   findAll(): Promise<IUser[]>;
   findById(id: string): Promise<IUser | null>;
 }

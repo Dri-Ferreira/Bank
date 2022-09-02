@@ -1,5 +1,4 @@
 import { registerUser } from './models/params/params';
-import { IUser } from './users.structure';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import * as bcrypt from 'bcryptjs';

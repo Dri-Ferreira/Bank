@@ -22,4 +22,5 @@ export interface IUserService {
   findAll(): Promise<responseUser[]>;
   findByCpf(cpf: string): Promise<responseUser | null>;
   findById(id: string): Promise<responseUser | null>;
+  updateUser(id: string): Promise<any>;
 }

@@ -1,19 +1,18 @@
 import { registerUser } from './models/params/params';
 import { UsersRepository } from './users.repository';
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcryptjs';
+import * as sgMail from '@sendgrid/mail';
 import { responseUser } from './models/response/response-user-repository';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly userRepository: UsersRepository,
-    private readonly mailService: MailerService,
-  ) {}
+  constructor(private readonly userRepository: UsersRepository) {}
 
   async register(params: registerUser): Promise<responseUser> {
     const verifiedUser = await this.userRepository.findByCpf(params.cpf);
+    params.password = await bcrypt.hash(params.password, 10);
 
     if (verifiedUser) {
       throw new ForbiddenException('User already exists');
@@ -21,13 +20,13 @@ export class UsersService {
 
     const newUser = await this.userRepository.register(params);
 
-    this.mailService.sendMail({
-      to: params.email,
-      from: 'Hilário tech <hilariotech@gmail.com>',
-      subject: 'User successfully registered ✔',
-      text: `Hi ${params.name}, you are receiving your access to the hilariotech system!
-      to access the system use your registered email and password.`,
-    });
+    // this.mailService.sendMail({
+    //   to: params.email,
+    //   from: 'Hilário tech <hilariotech@gmail.com>',
+    //   subject: 'User successfully registered ✔',
+    //   text: `Hi ${params.name}, you are receiving your access to the hilariotech system!
+    //   to access the system use your registered email and password.`,
+    // });
 
     delete newUser.password;
     return newUser;
@@ -50,11 +49,11 @@ export class UsersService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} user`;
   }
 }

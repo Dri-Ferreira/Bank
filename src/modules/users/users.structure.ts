@@ -15,6 +15,7 @@ export interface IUserRepository {
   register(params: registerUser): Promise<responseUser>;
   findAll(): Promise<responseUser[]>;
   findById(id: string): Promise<responseUser | null>;
+  updateUser(id: string): Promise<responseUser>;
 }
 
 export interface IUserService {
@@ -22,5 +23,5 @@ export interface IUserService {
   findAll(): Promise<responseUser[]>;
   findByCpf(cpf: string): Promise<responseUser | null>;
   findById(id: string): Promise<responseUser | null>;
-  updateUser(id: string): Promise<any>;
+  updateUser(id: string): Promise<responseUser>;
 }

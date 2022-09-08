@@ -49,8 +49,13 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async updateUser(id: string, updateUserDto: UpdateUserDto) {
+    const verifiedUser = this.userRepository.findById(id);
+    if (!verifiedUser) throw new ForbiddenException('User does not exist');
+
+    const update = await this.userRepository.updateUser(id, updateUserDto);
+    delete update.password;
+    return update;
   }
 
   async remove(id: number) {

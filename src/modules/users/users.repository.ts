@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/update-user.dto';
 import { registerUser } from './models/params/params';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
@@ -25,5 +26,14 @@ export class UsersRepository {
 
   findById(id: string): Promise<responseUser | null> {
     return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  updateUser(id: string, updateUserDto: UpdateUserDto): Promise<responseUser> {
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        ...updateUserDto,
+      },
+    });
   }
 }

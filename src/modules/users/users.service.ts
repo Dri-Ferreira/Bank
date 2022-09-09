@@ -2,7 +2,7 @@ import { registerUser } from './models/params/params';
 import { UsersRepository } from './users.repository';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import * as sgMail from '@sendgrid/mail';
 import { responseUser } from './models/response/response-user-repository';
 

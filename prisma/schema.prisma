@@ -22,5 +22,18 @@ model User {
   created_at   DateTime @default(now())
   updated_at   DateTime @default(now())
 
+  Account Account[]
+
   @@map("users")
+}
+
+model Account {
+  id String @id @default(uuid())
+  balance String
+  accountType String
+  accountProfile User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+  @@map("account")
 }

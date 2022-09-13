@@ -1,11 +1,15 @@
+import { accountRegister } from './models/params/params';
+import { responseAccount } from './models/response/response-account';
+import { AccountsRepository } from './account.repository';
 import { Injectable } from '@nestjs/common';
-import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Injectable()
 export class AccountsService {
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account';
+  constructor(private readonly accountRepository: AccountsRepository) {}
+
+  async registerAccount(params: accountRegister): Promise<responseAccount> {
+    return this.accountRepository.registerAccount(params);
   }
 
   findAll() {

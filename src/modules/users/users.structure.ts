@@ -19,7 +19,7 @@ export interface IUserRepository {
 }
 
 export interface IUserService {
-  register(data: IUser): Promise<IUser>;
+  register(parmas: registerUser): Promise<responseUser>;
   findAll(): Promise<responseUser[]>;
   findByCpf(cpf: string): Promise<responseUser | null>;
   findById(id: string): Promise<responseUser | null>;

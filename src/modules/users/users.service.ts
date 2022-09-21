@@ -11,23 +11,16 @@ export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
 
   async register(params: registerUser): Promise<responseUser> {
-    const verifiedUser = await this.userRepository.findByCpf(params.cpf);
+    const verifyExist = await this.userRepository.exists({
+      OR: [{ cpf: params.cpf }, { email: params.email }],
+    });
     params.password = await bcrypt.hash(params.password, 10);
 
-    if (verifiedUser) {
+    if (verifyExist) {
       throw new ForbiddenException('User already exists');
     }
 
     const newUser = await this.userRepository.register(params);
-
-    // this.mailService.sendMail({
-    //   to: params.email,
-    //   from: 'Hilário tech <hilariotech@gmail.com>',
-    //   subject: 'User successfully registered ✔',
-    //   text: `Hi ${params.name}, you are receiving your access to the hilariotech system!
-    //   to access the system use your registered email and password.`,
-    // });
-
     delete newUser.password;
     return newUser;
   }

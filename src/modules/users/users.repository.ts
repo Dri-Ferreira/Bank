@@ -32,10 +32,6 @@ export class UsersRepository implements IUserRepository<User> {
     return this.prisma.user.findMany();
   }
 
-  findById(id: string): Promise<responseUser | null> {
-    return this.prisma.user.findUnique({ where: { id } });
-  }
-
   updateUser(id: string, updateUserDto: UpdateUserDto): Promise<responseUser> {
     return this.prisma.user.update({
       where: { id },

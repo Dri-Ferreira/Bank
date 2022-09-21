@@ -16,7 +16,6 @@ export interface IUser {
 export interface IUserRepository<Entity> {
   register(params: registerUser): Promise<responseUser>;
   findAll(): Promise<responseUser[]>;
-  findById(id: string): Promise<responseUser | null>;
   updateUser(id: string, updateUserDto: UpdateUserDto): Promise<responseUser>;
   exists(where: Partial<User> | any): Promise<boolean | Entity | any>;
 }
@@ -25,6 +24,5 @@ export interface IUserService {
   register(parmas: registerUser): Promise<responseUser>;
   findAll(): Promise<responseUser[]>;
   findByCpf(cpf: string): Promise<responseUser | null>;
-  findById(id: string): Promise<responseUser | null>;
   updateUser(id: string, updateUserDto: UpdateUserDto): Promise<responseUser>;
 }

@@ -24,10 +24,6 @@ export class UsersRepository implements IUserRepository<User> {
     });
   }
 
-  findByCpf(cpf: string): Promise<responseUser | null> {
-    return this.prisma.user.findFirst({ where: { cpf } });
-  }
-
   findAll(): Promise<responseUser[]> {
     return this.prisma.user.findMany();
   }

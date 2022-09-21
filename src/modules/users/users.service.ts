@@ -40,7 +40,7 @@ export class UsersService {
 
   async findById(id: string): Promise<responseUser | null> {
     const user = await this.userRepository.exists({
-      OR: [{ id }],
+      id,
     });
     if (!user) {
       throw new ForbiddenException(' Usuário não encontrado id Inválido!');
@@ -51,7 +51,7 @@ export class UsersService {
 
   async updateUser(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.exists({
-      OR: [{ id }],
+      id,
     });
     if (!user) throw new ForbiddenException('User does not exist');
 

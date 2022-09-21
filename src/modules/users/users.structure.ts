@@ -23,6 +23,6 @@ export interface IUserRepository<Entity> {
 export interface IUserService {
   register(parmas: registerUser): Promise<responseUser>;
   findAll(): Promise<responseUser[]>;
-  findByCpf(cpf: string): Promise<responseUser | null>;
+  findById(id: string): Promise<responseUser | null>;
   updateUser(id: string, updateUserDto: UpdateUserDto): Promise<responseUser>;
 }

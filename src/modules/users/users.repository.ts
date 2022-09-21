@@ -3,6 +3,7 @@ import { registerUser } from './models/params/params';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { responseUser } from './models/response/response-user-repository';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UsersRepository {
@@ -13,6 +14,12 @@ export class UsersRepository {
       data: {
         ...params,
       },
+    });
+  }
+
+  exists(where: Partial<User> | any): Promise<boolean | User | any> {
+    return this.prisma.user.findFirst({
+      where,
     });
   }
 

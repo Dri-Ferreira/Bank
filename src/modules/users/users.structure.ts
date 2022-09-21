@@ -1,5 +1,6 @@
 import { responseUser } from './models/response/response-user-repository';
 import { registerUser } from './models/params/params';
+import { User } from '@prisma/client';
 export interface IUser {
   id?: string;
   name: string;
@@ -11,11 +12,12 @@ export interface IUser {
   cep: string;
 }
 
-export interface IUserRepository {
+export interface IUserRepository<Entity> {
   register(params: registerUser): Promise<responseUser>;
   findAll(): Promise<responseUser[]>;
   findById(id: string): Promise<responseUser | null>;
   updateUser(id: string): Promise<responseUser>;
+  exists(where: Partial<User> | any): Promise<boolean | Entity | any>;
 }
 
 export interface IUserService {

@@ -1,14 +1,19 @@
 import { registerUser } from './models/params/params';
-import { UsersRepository } from './users.repository';
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import * as sgMail from '@sendgrid/mail';
 import { responseUser } from './models/response/response-user-repository';
+import { User } from '@prisma/client';
+import { UsersRepository } from './users.repository';
+import { IUserRepository } from './users.structure';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UsersRepository) {}
+  constructor(
+    @Inject(UsersRepository)
+    private readonly userRepository: IUserRepository<User>,
+  ) {}
 
   async register(params: registerUser): Promise<responseUser> {
     const verifyExist = await this.userRepository.exists({
